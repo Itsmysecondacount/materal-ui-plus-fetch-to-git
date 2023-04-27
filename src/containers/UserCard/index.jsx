@@ -5,24 +5,20 @@ import PrincipalInformation from "../../componets/PrincipalInformation";
 import Description from "../Description";
 
 const UserCard = (props) => {
-const { userState } = props;
-const { avatar_url } = userState;
+  const { userState } = props;
+  const { avatar_url } = userState;
 
-  return(
+  return (
     <Grid container spacing={2}>
-      <Grid item xs={3}>
-        <CardMedia 
-          component="img"
-          alt="GitHub User"
-          image={avatar_url}
-        />
+      <Grid item xs={4}>
+        <CardMedia component="img" alt="GitHub User" image={avatar_url} />
       </Grid>
-      <Grid item xs={9}>
+      <Grid item xs={8}>
         <PrincipalInformation userState={userState} />
       </Grid>
-        <Description userState={userState} />
+      <Description userState={userState} />
     </Grid>
-  )
-}
+  );
+};
 
 export default UserCard;

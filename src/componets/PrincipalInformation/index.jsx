@@ -3,21 +3,17 @@ import React, { Fragment } from "react";
 
 const PrincipalInformation = (props) => {
   const { userState } = props;
-  const { 
-    name,
-    login,
-    created_at,
-   } = userState;
+  const { name, login, created_at } = userState;
 
-   return(
-     <Fragment>
-        <Stack>
-          <Typography>{name}</Typography>
-          <Typography>{created_at}</Typography>
-       </Stack>
+  return (
+    <Fragment>
+      <Stack>
+        <Typography>{name}</Typography>
+        <Typography>{created_at}</Typography>
+      </Stack>
       <Typography>{login}</Typography>
-     </Fragment>
-   )
- }
+    </Fragment>
+  );
+};
 
 export default PrincipalInformation;
