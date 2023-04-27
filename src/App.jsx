@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
+import { Container } from "@mui/material";
 
-function App() {
-  const [count, setCount] = useState(0)
+import Searcher from "./componets/Searcher";
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+import { getGitHubUser } from './services/users'
+import UserCard from "./containers/UserCard";
+
+const App = () => {
+
+  const [inputUser, setInputUser] = useState('octocat');
+  const [userState, setUserState] = useState('inputUser');
+  const [notFound, setNotFound] = useState(false);
+
+  const gettinUser = async (user) => {
+    const userResponse = await getGitHubUser(user)
+
+    if(userState === 'octocat'){
+      localStorage.setItem('octocat', userResponse)
+    }
+
+    if(userResponse.message === 'Not Found'){
+      const { octocat } = localStorage;
+      setInputUser(octocat);
+      setNotFound(true);
+    } else {
+      setUserState(userResponse);
+    }
+
+  };
+
+  console.log(userState);
+
+  useEffect(() =>{
+    gettinUser(inputUser)
+  },
+  [inputUser])
+
+  return(
+    <Container sx={{
+      background: 'whitesmoke',
+      width: '80vw',
+      height: '500px',
+      borderRadius: '16px',
+      marginTop: '40px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    }} >
+      <Searcher inputUser={inputUser} setInputUser={setInputUser} />
+      <UserCard userState={userState}/>
+    </Container>
   )
-}
+};
 
-export default App
+export default App;
